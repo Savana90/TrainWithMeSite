@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="friendfeed" unicode="&#xf312;" d="M717 850c-47 0-98-8-150-36-58 21-120 39-206 32-193-18-267-116-279-255-40-5-79-16-82-123-3-123 36-143 77-156l2-358c6-43-2-90 94-100l144-3c53-7 90 26 109 103 7-62 34-96 85-97l167 0c38 10 80 13 86 82l3 373 44-3c36 5 71 11 96 70l0 112c-7 46-19 40-32 50 34 8 70 11 82 94l-3 91c2 57-30 89-110 111-36 5-80 13-127 13z m-333-87c23 0 54-4 121-25l2-108c-35 12-65 26-89 23-76 3-83-35-87-75l0-77 193-2c4 102-23 232 146 254 73 10 141 1 192-21l-2-115c-27 22-62 29-100 34-104 14-80-79-85-148l139 0 0-102-139 0 2-461-153 5 0 456-200-4 0-452-153 0 4 452-75 0-2 115 81-5-2 32c3 74-3 202 156 222 20-1 33 1 51 2z" horiz-adv-x="957" />
+</font>
+</defs>
+</svg>

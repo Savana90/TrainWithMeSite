@@ -1,0 +1,85 @@
+<main class='container main-message'>
+    
+    <!-------------------section identity my contact--------------------
+    -------------------------------------------------------------------->
+    <section class=" every-contact <?= !array_key_exists('user', $_GET) ? 'every-contact-row' : '' ?>">
+        <h2><i class="fas fa-address-book"></i> Contacts</h2>
+        
+        <?php if(empty($myContacts)) : ?>
+            <p class="error">Tu n'as aucun contact</p>
+        <?php else : ?>
+            <ul class=' list-contact <?= !array_key_exists('user', $_GET) ? 'list-row' : '' ?>'>
+                <?php foreach ($myContacts as $contact) : ?>
+                    <li>
+                        <a href="index.php?template=message&user=<?= $contact['contact_key']?>">
+                            <span><i class="fas fa-user-circle"></i></span>
+                            <?= $contact['contact_name'] ?>
+                            
+                            <!-- envelop to alert user that he reveive a new message -->
+                            <em>
+                                <?= array_key_exists('statusU',$contact) && $contact['statusU'] > 0 ? '<i class="far fa-envelope"></i>' : '' ?>
+                            </em>
+                        </a>
+                    </li>
+                <?php endforeach ; ?>
+            </ul>
+        <?php endif ; ?>
+    </section>
+    
+    <!-----------------section private chat-box with a user------------------
+    ------------------------------------------------------------------------>
+    
+    <?php if(array_key_exists('user', $_GET) && !empty($oneUser) ) : ?>
+        <section class='section-message'>
+            <h2><i class="fas fa-comment-dots"></i> Chat : </h2>
+            
+            <!--- Div user identity --->
+            <div class="identity-user">
+                <?php if(!empty($oneUser['profil_picture'])) : ?>
+                    <div class="contact-pic">
+                        <img src="ressources/<?= $oneUser['profil_picture'] ?>" alt='ma photo de profil' >
+                    </div>
+                <?php else : ?>
+                    <i class="fas fa-user-circle"></i>
+                <?php endif ; ?>
+                
+                <p>
+                    <?= $oneUser['user_name'] ?>
+                    <span class=" <?= !empty($ongoingSession) ? 'onligne' : 'offligne' ?> "> </span>
+                    <em class='em'> <?= !empty($ongoingSession) ? 'En ligne' : 'Hors ligne' ?></em>
+                </p>
+            </div>
+
+            <!--- div of all messages exchanges with contact --->
+            <div class='div-message' id='chat-div'>
+                <a href="#last-message">Dernier message reçu</a>
+                <?php foreach ($contactMessage as $msg) : ?>
+                    <?php if($msg['sender_foreign_key'] == $oneUser['id']) : ?>
+                        <p class='receiver'><i class="fas fa-user-circle"></i> <?= htmlspecialchars($msg['content']) ?><span><?=$msg['date_cast'] ?></span></p>
+                    <?php else : ?>
+                        <p class='sender'><?= htmlspecialchars($msg['content']) ?> <i class="fas fa-user-circle"></i><span><?=$msg['date_cast'] ?></span></p>
+                    <?php endif ?>
+                <?php endforeach ; ?>
+                <span id='last-message'></span>
+            </div>
+            
+            <!--form to send message-->
+            <form class='form-message' method="POST" action="index.php" id='chat-discussion'>
+                <input type='hidden' name='action' value='message'>
+                <input type = 'hidden' name = 'receiver' value = '<?= $oneUser['id'] ?>' id = 'id-receiver' >
+                
+                <div class='div-textarea'>
+                    <textarea name='<?= $oneUser['id'] ?>' id='message' placeholder='Ecris ton message ici'></textarea>
+                </div>
+                <div class='send-message'>
+                    <button type='submit' class='submit-message'>Envoyer <i class="fas fa-paper-plane"></i></button>
+                </div>
+            </form>
+            
+        </section>
+    <?php elseif(array_key_exists('user', $_GET) && empty($oneUser)) : ?>
+        <p class='no-user'><i class="fas fa-frown"></i>  <?= $error?></p>
+    <?php endif; ?>
+    
+</main>
+

@@ -1,0 +1,118 @@
+<main class="container mainprofilpage">
+    <section>
+        <h1>Mes informations</h1>
+        
+        <!--------- Form to modify your user info ---------------------
+        -------------------------------------------------------------->
+        <form method="POST" class="form-modification" action="index.php">
+            <input type="hidden" name="action" value="modify-name">
+            <table class="table-recap">
+                <thead>
+                    <tr>
+                        <th colspan="2">Modifier mes informations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label aria-labelledby='pseudo' for='pseudo'>Pseudo</label></td>
+                        <td><input type="text" name="user_name" id='pseudo' value="<?= $user['user_name']?>"></td>
+                    </tr>
+                    <tr>
+                        <td><label aria-labelledby='nom' for='name'>NOM</label></td>
+                        <td><input type="text" name="last_name" id='name' value="<?= $user['last_name']?>"></td>
+                    </tr>
+                    <tr>
+                        <td><label aria-labelledby='prenom' for='first_name'>Prenom</label></td>
+                        <td><input type="text" name="first_name" id='first_name' value="<?= $user['first_name']?>"></td>
+                    </tr>
+                    <tr>
+                        <td><label aria-labelledby='email' for='email'>Email</label></td>
+                        <td><input type="email" name="email" id='email' value="<?= $user['email']?>"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="divButton">
+                <button type="submit" class="button-submit submitprofil">Modifier</button>
+            </div>
+        </form>
+        
+        <?php if(isset($_SESSION['auth']) && $_SESSION['auth']['admin'] !== 1) : ?>
+            <!--------------- Form to add or change your gym club ---------------
+            -------------------------------------------------------------------->
+            <form method="POST" class="form-modification" action="index.php" id='gym'>
+                <input type="hidden" name="action" value="modify-club">
+                <table class="table-recap">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Modifier ma salle de sport</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tr>
+                            <td><label aria-labelledby='ma salle' for='my-gym'>Ma salle</label></td>
+                            <td>
+                                <select name="gym_club" class="selectfield" id='my-gym'>
+                                    <?php foreach($allGym as $gym) : ?>
+                					<option value="<?= $gym['id'] ?>"><?= $gym['gym_name']." ". $gym['gym_road']. " ". $gym['gym_zipcode']. " ". $gym['city'] ?></option>
+                					<?php endforeach ; ?>
+                				</select>
+                			</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="divButton">
+                    <button type="submit" class="button-submit submitprofil">Modifier</button>
+                </div>
+            </form>
+            
+            <!--------- Form to add or change your profil pic ----------
+            ----------------------------------------------------------->
+            <form method="POST" class="form-modification" action="index.php" enctype="multipart/form-data" id='pic'>
+                <input type="hidden" name="action" value="modify-pic">
+                <table class="table-recap">
+                    <tbody>
+                         <tr>
+                             <td><label>Modifier ma photo de profil</label></td>
+                            <td><input type="file"  name='picture'></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="divButton">
+                    <button type="submit" class="button-submit submitprofil">Modifier</button>
+                </div>
+            </form>
+        <?php endif ?>
+        
+        <!------------ Form to modify your password  -------------------
+        --------------------------------------------------------------->
+        <form method="POST" class="form-modification" action="index.php">
+            <input type="hidden" name="action" value="update-password">
+            <table class="table-recap">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="title-table">Modifier mon mot de passe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><label aria-labelledby='Ancien mot de passe' for='last_password'>Ancien mot de passe</label></td>
+                        <td><input type="password" name="password" id='last_password'></td>
+                    </tr>
+                    <tr>
+                        <td><label for="new_password" aria-labelledby='nouveau mot de pass'>Nouveau mot de passe</label></td>
+                        <td><input type="password" name="new_password" id="new_password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirm_password" aria-labelledby='confirmer mon mot de pass'>Confirmer mon mot de passe</label></td>
+                        <td><input type="password" name="confirm_password" id="confirm_password"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="divButton">
+                <button type="submit" class="button-submit submitprofil">Modifier</button>
+            </div>
+        </form>
+    </section>
+  
+</main>
+

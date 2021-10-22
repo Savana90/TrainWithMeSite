@@ -1,0 +1,38 @@
+<main class='container contact-msg'>
+    
+    <!-------- link to admin page -------->
+    <a href='index.php?template=admin' class="lien-admin">Retour à la page principale</a>
+
+    <h1>Messages utilisateurs</h1>
+    <form action='index.php' class="form-msg" method = 'POST'>
+        <input type='hidden' name='action' value='deleteMsgContact'>
+        <table>
+            <thead class="admin-thead">
+                <tr>
+                    <th>id_User</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($msgs as $msg) : ?>
+                    <tr>
+                        <td><?= $msg['id_user']?></td>
+                        <td><?= $msg['name']?></td>
+                        <td><?= $msg['email']?></td>
+                        <td><?= $msg['msg']?></td> 
+                        <td> 
+                            <input type='checkbox' value='<?= $msg['name'] ?>' name='<?= $msg['id_contact_message']?>'>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="button-admin">
+            <button type='submit' class="button-submit">Valider</button>
+        </div>
+    </form>
+    
+</main>

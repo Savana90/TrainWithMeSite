@@ -1,0 +1,23 @@
+<main class='container'>
+    
+    <!---------- form to login user ---------->
+    <form class="form-connexion" method="POST" action="index.php" id="login-formulaire">
+        <input type="hidden" name="action" value="connexion">
+        <fieldset>
+            <legend class='legend' id='legend'>Connexion</legend>
+            <div>
+                <label for="login_email" aria-labelledby='email'>Email <i class="far fa-envelope"></i></label>
+                <input type="text" id="login_email" data-type="login_email" name="email" required>
+            </div>
+            <div>
+                <label for="login_password" aria-labelledby='password'>Password <i class="fas fa-unlock-alt"></i></label>
+                <input type="password" id="login_password" data-type="login_password" name="password" required>
+            </div>
+            <div class="divButton">
+                <button type="submit" class="button-submit">Valider</button>
+                <span class='spinner'>Loading <i class="fas fa-spinner spinnerLogin"></i></span>
+            </div>
+            <p class="requiredfield">Champs Obligatoire</p>
+        </fieldset>
+    </form>
+</main>

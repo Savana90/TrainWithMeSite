@@ -1,0 +1,44 @@
+<main class='container'>
+    
+    <!-------- form to register new user -------->
+    <form class="form-inscription" method="POST" action="index.php" id="inscribe-form" >
+        <input type="hidden" name="action" value="insert">
+        <fieldset>
+            <legend class='legend' id='legend'>Inscription</legend>
+            <div>
+                <label for="user_name" aria-labelledby='pseudo'>Pseudo</label>
+                <input type="text" id="user_name" data-type="user_name" name="user_name" minlength="7" required>
+            </div>
+            <div>
+                <label for="gender" class="for-gender" aria-labelledby='sexe féminin' >Sexe féminin</label>
+                <input type="checkbox" name="gender" id="gender" data-type="gender" class="gender" value="female" checked>
+            </div>
+            <div>
+                <label for="last_name" aria-labelledby='nom'>Nom</label>
+                <input type="text" id="last_name" data-type="last_name" name="last_name" placeholder="CHARLES" required> 
+            </div>
+            <div>
+                <label for="first_name" aria-labelledby='prenom'>Prenom</label>
+                <input type="text" id="first_name" data-type="first_name" name="first_name" placeholder="Jean" required>
+            </div>
+            <div>
+                <label for="email" aria-labelledby='email'>Email <i class="far fa-envelope"></i></label>
+                <input type="email" id="email" data-type="email" name="email" placeholder="Jean@hotmail.fr" required>
+            </div>
+            <div>
+                <label for="password" aria-labelledby='mot de passe'>Mot de passe <i class="fas fa-unlock-alt"></i></label>
+                <input type="password" id="password" data-type="password" name="password" minlength="8" required>
+            </div>
+            <div>
+                <label for="confirm_password" aria-labelledby='confirmer le mot de passe'>Confirmer le mot de passe <i class="fas fa-unlock-alt"></i></label>
+                <input type="password" id="confirm_password" data-type="confirm_password" name="confirm_password" minlength="8" required>
+            </div>
+            <div class="divbutton">
+                <button type="submit" class="button-submit">Je m'inscris</button>
+                <span class='spinner'>Loading <i class="fas fa-spinner spinnerRegister"></i></span>
+            </div>
+            <p class="requiredfield">Champs Obligatoire</p>
+        </fieldset>
+    </form>
+</main>
+

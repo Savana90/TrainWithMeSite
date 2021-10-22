@@ -1,0 +1,22 @@
+<main class='container'>
+    <h2 class='title-contact'>Nous contacter</h2>
+    
+    <!------ Form to send a message to admin ------>
+    <form method='POST' action='index.php' class='form-footer' id='contact'>
+        <input type='hidden' name='action' value='contact'>
+        <div>
+            <label for='nameContactUs' aria-labelledby='nom'>Nom</label>
+            <input type='text' name='nameContactUs' id='nameContactUs' value=' <?= isset($user) && !empty($user) ? $user['last_name'] : '' ?>'>
+        </div>
+        <div>
+            <label for='emailContactUs' aria-labelledby='email'>Email</label>
+            <input type='email' name='emailContactUs' id='emailContactUs' value=' <?= isset($user) && !empty($user) ? $user['email'] : '' ?>' >
+        </div>
+        <div>
+            <label for="contact-us" aria-labelledby='message'>Message</label>
+            <textarea name='msgContact' id='contact-us'></textarea>
+        </div>
+        <button type='submit'>Envoyé</button>
+    </form>
+    
+</main>

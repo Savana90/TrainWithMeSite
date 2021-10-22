@@ -1,0 +1,179 @@
+<main class="container mainhomepage">
+    
+    <!---------------- section with user pic ----------------
+    --------------------------------------------------------->
+    <section>
+        <div class=picture-n-title>
+            
+            <!--Profil picture here-->
+            <?php if(!empty($userP['profil_picture'])) : ?>
+                <div class="picture">
+                    <img src="ressources/<?= $userP['profil_picture'] ?>" alt='ma photo de profil'>
+                </div>
+                
+            <!--If user didn't choose a pic yet-->
+            <?php else : ?>
+                <div class='picture'>
+                    <a href='index.php?template=profil#pic'>
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                </div>
+            <?php endif ; ?>
+            
+            <h1>
+                Bienvenue 
+                <span>
+                    <?= $_SESSION['auth']['user_name']?>
+                </span>
+            </h1>
+            
+        </div>
+        
+        <!--Notification if user have unread messages-->
+        <a href='index.php?template=message' class='not'>
+            <?= isset($notif) && $notif > 0 ? $notif . ' <i class="far fa-envelope"></i>' : '' ?>
+        </a>
+    </section>
+    
+    <!--Section with form to find a gym partener who's in the same gym and choose 
+    the same time_slot --------------------------------------------------------->
+    <section>
+        <h2 class='intro'>Trouve une partenaire sportive</h2>
+        
+        <form class="formgym" method="POST" action="index.php"> 
+            <input type='hidden' name='action' value='home'>
+            <table class="table-recap">
+                <tbody>
+                    <tr>
+                        <td>
+                            Ma salle de sport
+                        </td>
+                        <!--Link to choose a gym place-->
+                        <td>
+                            <?php if(!empty($userP['gym_foreign_key'])) : ?>
+                                <div class="div-field">
+                                    <?= $userA['gym_name'] ?>
+                                </div>
+            				<?php else :?>
+        				        <p class="choice-gym">
+        				            Pour choisir ta salle de sport 
+        				            <i class="fas fa-long-arrow-alt-right"></i> 
+        				            <a href="index.php?template=profil#gym">
+        				                clique ici
+        				            </a>
+        				        </p>
+            				<?php endif ; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Je choisis le jour</td>
+                        <td>
+                            <!--to select a time_slot-->
+                            <select name="time_slot" class="selectfield">
+                                
+                                <!--if user already choose a time_slot-->
+                                <?php if (!empty($userP['time_slot'])) : ?>
+                                    <option value='<?= $userP['time_slot']?>'>
+                                        <?= $slotDay['day_slot'] ?>
+                                    </option>
+                                <?php endif ; ?>
+                                
+                                <!--if user want to choose or change time_slot-->
+                                <?php foreach($slots as $slot) : ?>
+                                    <option value='<?= $slot['id_slot'] ?>'> 
+                                        <?= $slot['day_slot'] ?>
+                                    </option>
+                                <?php endforeach ; ?>
+                                
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="divbutton">
+                <button type="submit" class="button-submit">Chercher</button>
+            </div>
+        </form>
+    </section>
+    
+    <!--DIV with error message if no contact find-->
+    <div class='no-one-find'>
+        
+        <!--if no contacts find in gym place-->
+        <?php if(isset($error)) :  ?>
+            <p><i class="fas fa-frown"></i> <?= $error ?> </p>
+            
+        <!--if contact find in gym place but not on the time_slot choose-->
+        <?php elseif( !isset($error) && isset($error1)) :  ?>
+            <p><i class="fas fa-frown"></i> <?= $error1 ?> </p>
+        <?php endif ; ?>
+    </div>
+    
+    <!--Section with result form -----------------------------------------------------------
+    --------------------------------------------------------------------------------------->
+    <section class=" <?= isset($parteners) && !empty($parteners) ? 'section-partener' : ''?>">
+        
+        <!--DIV with information of contacts that goes to the same gym as user--
+        -------------------------------------------------------------------------->
+        <div class="section-all-user <?= isset($parteners) && !empty($parteners) ? 'div-partener' : ''?>">
+            <?php if(!empty($allUsersByGym) ): ?>
+                <h2 class='intro'> Elles sont inscrites dans ta salle de sport </h2>
+                <?php foreach ($allUsersByGym as $allUser) : ?>
+                    <ul class='list-user-gym'>
+                    
+                        <li class='td-img'>
+                            <?php if(!empty($allUser['profil_picture'])) : ?>
+                                <img src = "ressources/<?= $allUser['profil_picture']?>" alt='ma photo de profil'>
+                            <?php else : ?>
+                                <i class="fas fa-user-circle"></i>
+                            <?php endif; ?>
+                        </li>
+                        
+                        <li>
+                            <?= $allUser['user_name'] ?>
+                        </li>
+                        
+                        <li>
+                            <a href="index.php?template=message&user=<?= $allUser['id']?>"> 
+                                Contacter
+                            </a>
+                        </li>
+                    
+                    </ul>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+    <!--DIV contacts that goes to the same gym and choose the same time_slot 
+    -------------------------------------------------------------------------->
+
+        <div class="section-all-user <?= isset($parteners) && !empty($parteners) ? 'div-partener' : ''?>">
+            <?php if(isset($parteners) && !empty($parteners)) : ?>
+                <h2 class='intro'> Elles ont choisies le même créneau horaire <?= $slotDay['day_slot'] ?> </h2>
+                <?php foreach ($parteners as $partener) : ?>
+                    <ul class='list-user-gym'>
+                    
+                        <li class='td-img'>
+                            <?php if(!empty($partener['profil_picture'])) : ?>
+                                <img src = "ressources/<?= $partener['profil_picture']?>">
+                            <?php else : ?>
+                                <i class="fas fa-user-circle"></i>
+                            <?php endif; ?>
+                        </li>
+                        
+                        <li><?= $partener['user_name'] ?></li>
+                        
+                        <li>
+                            <a href="index.php?template=message&user=<?= $partener['id']?>"> 
+                                Contacter
+                            </a>
+                        </li>
+                    
+                    </ul>
+                <?php endforeach; ?>
+            <?php endif ; ?>
+        </div>
+        
+    </section>
+
+</main>

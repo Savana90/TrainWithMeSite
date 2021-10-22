@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>TrainWithMe</title>
+        
+        <link rel="stylesheet" href="css/Normalize.css">
+    
+        <link rel="stylesheet" href="font/icomoon/style.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=EB+Garamond:ital,wght@1,800&family=Style+Script&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="css/common.css">
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="logo"><span class="icon-woman"></span>TrainWithMe</h1>
+            <nav class="nav">
+                <div class="div-nav">
+                    <?php if(!array_key_exists('auth', $_SESSION)) : ?>
+                        <ul>
+                            <li class="list">
+                                <a href='index.php?template=inscription#inscribe-form' id="inscribe">Inscription</a>
+                            </li>
+                            <li class="list">
+                                <a href='index.php?template=connexion#login-formulaire' id="connexion">Connexion</a>
+                            </li>
+                        </ul>
+                    <?php else : ?>
+                        <ul>
+                            <?php if($_SESSION['auth']['admin'] !== 1) : ?>
+                                <li class="list <?= (array_key_exists('template', $_GET)) && ($_GET['template'] == 'home') ? 'home' :'' ; ?> ">
+                                    <a href='index.php?template=home'>Accueil</a>
+                                </li>
+                                <li class="list <?= (array_key_exists('template', $_GET)) && ($_GET['template'] == 'message') ? 'message' :'' ; ?> ">
+                                    <a href='index.php?template=message'>Messages</a>
+                                </li>
+                               
+                            <?php else : ?>
+                                <li class="list <?= (array_key_exists('template', $_GET)) && ($_GET['template'] == 'admin') ? 'admin' :'' ; ?> ">
+                                    <a href='index.php?template=admin'>Users</a>
+                                </li>
+                                <li class="list <?= (array_key_exists('template', $_GET)) && ($_GET['template'] == 'card') ? 'card' :'' ; ?> ">
+                                    <a href='index.php?template=card'>Fiche user <i class="fas fa-users"></i></a>
+                                </li>
+                            <?php endif ?>
+                            
+                            <li class="list <?= (array_key_exists('template', $_GET)) && ($_GET['template'] == 'profil') ? 'profil' :'' ; ?> ">
+                                <a href='index.php?template=profil'>Profil</a>
+                            </li>
+                            <li class="list">
+                                <a href='index.php?template=logout'>Déconnexion</a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </nav>
+        </header>
+        
+        <?php if(!array_key_exists('template', $_GET) && !array_key_exists('auth', $_SESSION) ) : ?>
+            <div class='container div-container'>
+                <p class="presentation">
+                    Marre de s’entrainer seule ? Besoin de motivation pour aller faire du sport ?
+                    Trouve une partenaire dans ta salle de sport avec qui faire ta séance.
+                    <strong>TrainWithMe</strong> est un réseau de femmes qui cherchent à s’entrainer en duo ou en groupe.
+                    C’est plus fun n’est-ce pas… ? 
+                    Inscris toi dès maintenant. <a href='index.php?template=inscription#inscribe-form'>C'est<strong> gratuit</strong>.</a>
+                </p>
+            </div>
+        <?php endif ; ?>
+        
+        <!---- if error in form $_SESSION['error'] ---->
+        <div class="diverror">
+            <?php if(!empty($_SESSION['error'])) : ?>
+                <p class='error'><span><i class="fas fa-exclamation-circle"></i></span><?= $_SESSION['error'] ?></p>
+            <?php endif; ?>
+        </div>
+        
+        <!---- succeed message with $_SESSION['succeed'] ---->
+        <div class="divsucceed">
+            <?php if(!empty($_SESSION['succeed'])) : ?>
+                <p class='succeed'><span><i class="fas fa-check"></i></span><?= $_SESSION['succeed'] ?></p>
+            <?php endif; ?>
+        </div>
+        
+        <!---- to require the different views in ---->
+        <?php if(array_key_exists('template', $_GET)) : ?>
+            <?php require $template ?>
+        <?php  endif; ?>
+        
+        <?php if(!isset($_SESSION['auth']) || ( array_key_exists('auth', $_SESSION) && $_SESSION['auth']['admin'] == 0) ) : ?>
+            <footer class='footer'>
+                <div>
+                    <span class="icon-woman icon-footer"></span>
+                    <h4>Retrouvez-nous sur nos réseaux sociaux</h4>
+                    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a> 
+                </div>
+                <div class='deuxieme-div'>
+                    <a href='index.php?template=contactForm'>Nous contacter</a>
+                    <a href='index.php?template=ml'>Mention légale</a>
+                    <p>Copyright <i class="far fa-copyright"></i> Savannah CHARLES</p>
+                </div>
+            </footer>
+        <?php endif; ?>
+        
+        <script type="module" src="js/app.js"></script>
+    </body>
+</html>

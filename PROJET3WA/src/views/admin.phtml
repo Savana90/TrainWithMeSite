@@ -1,0 +1,78 @@
+<main class="container admin-page">
+    
+    <h1>Liste de tous les utilisateurs</h1>
+    
+    <!--Link to create new admin or check message admin received-->
+    <div class='div-create-user'>
+        <a href="index.php?template=newAdmin&create=true" class="create-user">Créer un nouvel administrateur</a>
+        
+        <a href="index.php?template=contactMsg" class="create-user">
+            Messages Utilisateurs
+            <span class='not'>
+                <?= isset($msgs) && $msgs > 0  ? $msgs . ' <i class="far fa-envelope"></i>' : '' ?>
+            </span>
+        </a>
+    </div>
+      
+    <!--Div for paging display the number of page-->
+    <div class=div-paging>
+        <p class="p-paging">Pages</p>
+        <?php for($i = 1; $i <= $pages['nbrOfPages']; $i++ ) : ?>
+            <a href='index.php?template=admin&pages=<?= $i ?>' class="paging <?= isset($_GET['pages']) && $_GET['pages'] == $i ? 'pages' : '' ?>">
+                <?= $i ?>
+            </a> 
+        <?php endfor ; ?>
+    </div>
+    
+    <!--Form to update users delete or change statut-->
+    <form class="form-admin" action="index.php" method = "POST">
+        <input type="hidden" name='action' value='admin'>
+        <!--display user 10 profils per pages-->
+        <table>
+            <thead class="admin-thead">
+                <tr>
+                    <th>Identité</th>
+                    <th>Admin</th>
+                    <th>User</th>
+                    <th>Connecté</th>
+                    <th>Fiche User</th>
+                    <th>Supprimer User</th>
+                </tr>
+            </thead>
+            <tbody>
+                 <?php foreach($allUsers as $user) : ?>
+                    <tr>
+                        <td>
+                           <?=$user['last_name'] . " " . $user['first_name']?> 
+                        </td>
+                        <td> 
+                            <input type="radio" value="1" name="<?= $user['id']?>" <?= $user['admin'] == 1 ? 'checked' : ""  ?> >
+                        </td>
+                        <td> 
+                            <input type="radio" value="0" name="<?= $user['id']?>" <?= $user['admin'] == 0 ? 'checked' : ""  ?> >
+                        </td>
+                        
+                        <td>
+                            <p class="
+                            <?= $user['connected'] != NULL && $user['connected'] < 360 ? 'on-ligne' : 'off-ligne' ?>
+                            ">
+                            </p>
+                        </td>
+                      
+                        <td>
+                            <a href="index.php?template=card&profil=<?= $user['id']?>" class="see-profil">Voir</a>
+                        </td>
+                        <td> 
+                            <input type="radio" value="delete" name="<?= $user['id']?>" >
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        
+        <div class="button-admin">
+            <button type='submit' class="button-submit">Valider</button>
+        </div>
+    </form>
+    
+</main>

@@ -1,0 +1,118 @@
+<main class="container admin-page">
+    <a href="index.php?template=admin" class="see-profil">Retour à liste complète</a>
+    
+    <h2 class='title-search'>Recherche utilisateur </h2>
+    
+    <!------------- Search input --------------
+    ------------------------------------------>
+    <div>
+        <form class='form-search' action='index.php?template=card' method='POST'>
+            <input type='hidden' name='action' value='search-user'>
+            <div class='search'>
+                <input type='search' name='search' placeholder="Recherche utilisateur" id='searchInput'>
+                <button>Rechercher</button>
+            </div>
+        </form>
+    </div>
+    <!--------- result search field in js --------->
+    <div id='resultSearch' class='result-search'></div>
+    
+    <!--------- result search field in php ----------
+    ------------------------------------------------>
+    <?php if(array_key_exists('search', $_POST)) : ?>
+        <div class='result-search'>
+            <?php if (!empty($searchUser)) : ?>
+                <ul>
+                    <?php foreach ($searchUser as $search) : ?>
+                        <li>
+                            <a href='index.php?template=card&profil=<?= $search['id']?>'>
+                                <?= $search['first_name'] ?>
+                                <?= $search['last_name'] ?>
+                            </a>
+                        </li>
+                    <?php endforeach ; ?>
+                </ul>
+            <?php else : ?> 
+                <p>Aucun résultat trouvé</p>
+            <?php endif ;?>
+        </div>
+    <?php endif ; ?>
+    
+    <!----------------- Detail on user -----------------
+    ------------------------------------------------------>
+    <?php if(array_key_exists('profil',$_GET) && isset($oneUser) && !empty($oneUser) ) : ?>
+        <div>
+            <form class="form-admin" action="index.php" method = "POST">
+                <input type="hidden" name='action' value='admin'>
+                <table class="table-card">
+                    <caption>Utilisateur : <?=$oneUser['user_name']?> </caption>
+                    <tbody>
+                        <tr>
+                            <td>Pseudo</td>
+                            <td>
+                               <?=$oneUser['user_name']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nom utilisateur</td>
+                            <td>
+                               <?=$oneUser['last_name']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Prénom utilisateur</td>
+                            <td>
+                               <?=$oneUser['first_name']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date d'inscription</td>
+                            <td>
+                               <?=$oneUser['date_create']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date de derniere connexion</td>
+                            <td>
+                               <?=$oneUser['last_connected']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                               <?=$oneUser['email']?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Salle</td>
+                            <td>
+                               <?= empty($oneUser['gym_foreign_key']) ? 'N/A' : $gymClub['gym_name'] ?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Photo</td>
+                            <td>
+                               <?= empty($oneUser['profil_picture']) ? 'N/A' : 'OUI' ?> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Administrateur</td>
+                            <td class=span-input> 
+                                <?= $oneUser['admin'] == 1 ? "OUI" : "NON"  ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Supprimer Utilisateur</td>
+                            <td> 
+                                <input type="checkbox" value="delete" name="<?= $oneUser['id']?>">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button-user">
+                    <button type='submit' class="button-submit">Supprimer</button>
+                </div>
+            </form>
+        </div>
+    <?php endif ; ?>
+</main>

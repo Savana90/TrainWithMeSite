@@ -1,0 +1,6 @@
+<main class='container mainError'>
+    <div class='error'>
+        <p class='error'>Aïe ! Cette page est introuvable.</p>
+        <p>Retourner sur la <a href="index.php?template=<?= isset($_SESSION['auth']) && $_SESSION['auth']['admin'] == 0 ? 'home' : 'admin' ?>  ">page principale</a> </p>
+    </div>
+</main>
