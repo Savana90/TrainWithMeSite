@@ -1,3 +1,5 @@
 /ressources/*
 /src/models/DatabaseModel.php
 *.sql
+*.jpeg
+*.jpg
